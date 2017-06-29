@@ -1,2 +1,9 @@
-@import 'base/normalize';
-@import 'base/app';
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  margin-top: 4vh;
+}

@@ -1,9 +1,15 @@
 const express = require('express');
 const path = require('path');
+const compression = require('compression');
+const logger = require('morgan');
+const request = require('request');
+const qs = require('querystring');
+
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const historyApiFallback = require('connect-history-api-fallback');
 
 const config = require('../webpack.config.js');
 
@@ -39,7 +45,7 @@ const middleware = webpackMiddleware(compiler, {
 app.use(middleware);
 app.use(webpackHotMiddleware(compiler));
 app.get('*', function response(req, res) {
-  res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'src/index.html')));
+  res.send(path.join(__dirname, 'src/index.html'));
   res.end();
 });
 

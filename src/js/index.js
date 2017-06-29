@@ -1,56 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import 'babel-polyfill';
-import logger from 'dev/logger';
 
-import rootReducer from 'reducers';
-import Routes from 'routes';
-import DevTools from 'dev/redux-dev-tools';
+import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.js';
 
-// Load SCSS
 import '../scss/app.scss';
 
-const isProduction = process.env.NODE_ENV === 'production';
+import { Container, Header } from 'semantic-ui-react'
 
-// Creating store
-let store = null;
-
-if (isProduction) {
-  // In production adding only thunk middleware
-  const middleware = applyMiddleware(thunk);
-
-  store = createStore(
-    rootReducer,
-    middleware
-  );
-} else {
-  // In development mode beside thunk
-  // logger and DevTools are added
-  const middleware = applyMiddleware(thunk, logger);
-  const enhancer = compose(
-    middleware,
-    DevTools.instrument()
-  );
-
-  store = createStore(
-    rootReducer,
-    enhancer
-  );
-}
-
-
-// Render it to DOM
 ReactDOM.render(
-  (<Provider store={ store }>
-    { isProduction ?
-      <Routes /> :
-      <div>
-        <Routes />
-        <DevTools />
-      </div> }
-  </Provider>),
+  (<Container text className='app'>
+    <Header as='h2' dividing>Header</Header>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+  </Container>),
   document.getElementById('root')
-);
+  )

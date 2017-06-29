@@ -16,6 +16,10 @@ const sourcePath = path.join(__dirname, './src');
 
 // Common plugins
 const plugins = [
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery'
+  }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     minChunks: Infinity,
@@ -62,6 +66,14 @@ const rules = [
     include: imgPath,
     use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
   },
+  { 
+    test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+    use: ['url-loader?limit=100000'] 
+  },
+  {
+    test: /\.css$/,
+    use: [ 'style-loader', 'css-loader' ]
+  }
 ];
 
 if (isProduction) {
