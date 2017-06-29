@@ -44,6 +44,40 @@ const middleware = webpackMiddleware(compiler, {
 
 app.use(middleware);
 app.use(webpackHotMiddleware(compiler));
+
+//Route
+
+app.post('/schedule/week', function(req, res) {
+  //Input: 
+    //req.body.startDate is the string starting date requested by the user.
+    //req.body.endDate is the string ending date.
+  //Purpose:
+    //This function takes the requested schedule by the client and 
+    //makes a request to Qgenda Api. It expects an array of objects
+    //as response. It then takes that response and sends the array 
+    //to the client.
+  //Create the query string requested by the Qgenda API.
+  var query = qs.stringify({
+    companyKey: config.api_key,
+    email: config.api_email,
+    password: config.api_pass
+    //startDate: req.body.startDate,
+    //endDate: req.body.endDate
+  })
+  console.log('query', query)
+  //Make the request to the Qgenda API.
+  var url = 'https://api.qgenda.com/v1/schedule?' + query
+
+  var realAssURL = 'https://api.qgenda.com/v1/schedule?companyKey=6b9703e0-1b91-4170-a1d6-d0fa711f73fa&startDate=4/17/2017&endDate=4/23/2017&email=HoustonRadITAPI@qgenda.com&password=Houston1';
+  request(realAssURL, function(error, response, body) {
+    if (error) {
+      console.error('Error:', error)
+    } else {
+      res.status(200).send(body) //Temporary
+    }
+  })
+})
+
 app.get('*', function response(req, res) {
   res.send(path.join(__dirname, 'src/index.html'));
   res.end();
